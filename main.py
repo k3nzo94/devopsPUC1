@@ -4,7 +4,7 @@ import random
 app = FastAPI()
 
 
-@app.get("/")
+@app.get("/hello")
 async def read_root():
     return {"Hello": "World"}
 

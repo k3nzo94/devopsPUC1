@@ -17,17 +17,11 @@ jobs:
 
   discord:
     runs-on: ubuntu-latest
-    needs: build
-    if: always()
     steps:
-      - name: Notificar Discord
+      - name: Discord
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ needs.build.result }}
-          title: "CI - Pull Request #${{ github.event.pull_request.number }}"
-          description: "${{ github.event.pull_request.title }}"
-          username: "GitHub Actions"
 
 
-          
+

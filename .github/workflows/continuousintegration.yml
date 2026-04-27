@@ -17,9 +17,9 @@ jobs:
   discord:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v2
 
       - name: Run Discord Webhook
-        uses: Sniddl/discord-comits@v1.6
+        uses: johnnyhuy/actions-discord-git-webhook@main
         with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          webhook_url: ${{ secrets.YOUR_DISCORD_WEBHOOK_URL }}

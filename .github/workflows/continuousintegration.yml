@@ -9,8 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v2        # ← v5 não existe, use v2 ou v3
+      - name: Instalar dependências
+        run: pip install pytest
+
+      - name: Rodar testes unitários
+        run: python -m pytest test_utils_texto.py -v
       - name: Python Lint Code Scanning Action
         uses: advanced-security/python-lint-code-scanning-action@v1.1.3
         with:
           linter: pylint
+
+  discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Discord
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+
+
+

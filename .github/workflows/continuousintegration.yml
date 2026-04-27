@@ -9,7 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2        # ← v5 não existe, use v2 ou v3
+        uses: actions/checkout@v2
+
+      - name: Instalar dependências
+        run: pip install pytest
+
+      - name: Rodar testes unitários
+        run: pytest test_calculator.py -v
+
       - name: Python Lint Code Scanning Action
         uses: advanced-security/python-lint-code-scanning-action@v1.1.3
         with:
@@ -17,11 +24,14 @@ jobs:
 
   discord:
     runs-on: ubuntu-latest
+    needs: build
+    if: always()
     steps:
       - name: Discord
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-
-
-
+          status: ${{ needs.build.result }}
+          title: "CI - Pull Request #${{ github.event.pull_request.number }}"
+          description: "${{ github.event.pull_request.title }}"
+          username: "GitHub Actions"
